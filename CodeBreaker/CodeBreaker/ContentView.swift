@@ -10,18 +10,28 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-            Text("Welcome to CS193p!")
-                .background(.yellow)
-                .padding()
-                .foregroundStyle(.green)
-            Text("Greetings!")
-            Circle()
-        }
-        .font(.largeTitle)
-        .padding()
-        .foregroundStyle(.blue)
+            pegs(colors: [.red, .green, .green, .yellow])
+            pegs(colors: [.red, .blue, .green, .red])
+            pegs(colors: [.red, .yellow, .green, .blue])
+        }.padding()
     }
+
+    func pegs(colors: [Color]) -> some View {
+        HStack {
+            ForEach(colors.indices, id: \.self) {
+                index in RoundedRectangle(cornerRadius: 10)
+                    .aspectRatio(1, contentMode: .fit)
+                    .foregroundStyle(colors[index])
+            }
+            MatchMarker(matches: [.exact, .inexact, .nomatch, .exact])
+        }
+    }
+}
+
+enum Match {
+    case nomatch
+    case exact
+    case inexact
 }
 
 #Preview {
